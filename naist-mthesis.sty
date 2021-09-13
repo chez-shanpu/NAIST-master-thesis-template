@@ -1,0 +1,218 @@
+% 
+% naist-mthesis.sty: master's thesis style in NAIST
+%
+%                                             Ver. 1.2   Jan. 21, 1998
+%                                             Ver. D     July 07, 2003
+% 2018.01.08 Modified
+%   This file must be included before \begin{document}. The Document
+%   style must be 'article', so you should include this macro as follows:
+%    \documentstyle[naist-mthesis]{article}
+% 2020.02.13 Modified
+%   Change titlepage as the IS devision
+%
+\typeout{Master's Thesis / Master's Report Style for Division of Information Science,
+  Graduate School of Science and Technology, NAIST}
+%
+% input the common style file
+%
+\input naist-mcommon.sty
+%
+% Figure and Table Caption
+%       from article.sty, however, ``.'' was used instead of ``:'' 
+%       to separate figure/table numbers and captions.
+%
+\long\def\@makecaption#1#2{
+ \vskip 10pt 
+ \setbox\@tempboxa\hbox{#1. #2}
+ \ifdim \wd\@tempboxa >\hsize #1. #2\par \else \hbox
+to\hsize{\hfil\box\@tempboxa\hfil} 
+ \fi}
+%
+% References (bug fix article.sty)
+%
+%\typeout{reference}
+\def\thebibliography#1{\section*{References\@mkboth
+ {REFERENCES}{REFERENCES}\addcontentsline{toc}{section}{References}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus .07em}
+ \sloppy\clubpenalty4000\widowpenalty4000
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+%
+% page layout
+%
+\topmargin=0.5cm
+\textheight=20.5cm
+\textwidth=14.5cm
+\oddsidemargin=0.6cm
+\evensidemargin=-3.8cm
+\renewcommand{\baselinestretch}{1.2}
+%
+% pagestyle
+%
+%\typeout{pagestyle}
+\def\yes{1}
+%
+% for final
+%
+\def\ps@final{
+\def\isfinal{1}
+\def\@evenhead{}%
+\def\@oddhead{}%
+\def\@oddfoot{\hfill\thepage\hfill}%
+\def\@evenfoot{\hfill\thepage\hfill}%
+}
+%
+% drafts
+%
+\def\ps@draft{
+\def\isfinal{0}
+\def\draftstr{{\engtoday. \ecurtime, \eauthorstr}}
+\def\draftfoot{%
+        {{\sf \draftstr}\hfill{\sf \thepage}}%
+}
+\def\@evenhead{}%
+\def\@oddhead{}%
+\def\@oddfoot{{\draftfoot}}%
+\def\@evenfoot{{\draftfoot}}%
+}
+%
+% title page
+%
+%\typeout{titlepage}
+\renewcommand{\titlepage}{
+        \newpage
+        \thispagestyle{empty}
+        \if\isfinal\yes
+%                {\raggedleft
+%                        \normalsize NAIST-IS-\edoctitleacronym\studentnumberstr \\
+%                }
+                \vspace*{9mm}
+                \begin{center}
+                        \Large\bf\edoctitle
+                \end{center}
+                \vspace*{27mm}
+                \begin{center}
+                        \Large\bf\etitlestr
+                \end{center}
+                \vspace*{40mm}
+                \begin{center}
+                  \eauthorstr \\
+                  \eprogramstr \\
+                  Graduate School of Science and Technology\\
+                  Nara Institute of Science and Technology\\
+                \end{center}
+                \vspace*{5mm}
+                \begin{center}
+                  Supervisor: Prof. \efirstcmember\\
+                  \elabnamestr\ (Division of Information Science)\\
+                  %\edatestr
+                \end{center}
+                \vspace*{5mm}
+                \begin{center}
+                  Submitted on \edatestr
+                \end{center}
+                \vspace*{\fill}
+        \else
+                \vspace*{\fill}
+                \begin{center}
+                        {\Huge\bf DRAFT}
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        \Large\bf\etitlestr
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        {\Large \eauthorstr}
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        {\Large\bf \engtoday}
+                \end{center}
+                \begin{center}
+                        {\Large\bf \ecurtime}
+                \end{center}
+                \vspace*{\fill}
+        \fi
+}
+%
+% committee members page
+%
+\newcommand{\cmemberspage}{
+        \newpage
+        \thispagestyle{empty}
+        \vspace*{\fill}
+        \begin{center}
+        A \edoctitle\\
+        submitted to
+        Graduate School of Science and Technology, \\
+        Nara Institute of Science and Technology \\
+        in partial fulfillment of the requirements for the degree of \\
+        MASTER of \emajorstr
+
+        \bigskip
+
+        \eauthorstr
+
+        \bigskip\medskip
+
+        \begin{tabular}{p{0.5in}ll}
+        \multicolumn{2}{l}{Thesis Committee:} & \\
+        & \efirstcmember & \\
+        & \efirstposition & \\
+        & \esecondcmember & \\
+        & \esecondposition &\\
+        & \ethirdcmember & \\
+        & \ethirdposition & \\
+        & \efourthcmember & \\
+        & \efourthposition &\\
+        & \efifthcmember & \\
+        & \efifthposition & \\
+        & \esixthcmember & \\
+        & \esixthposition &\\
+        & \eseventhcmember &\\
+        & \eseventhposition &\\
+        & \eeighthcmember & \\
+        & \eeighthposition &\\
+        \end{tabular}
+        \end{center}
+}
+%
+% abstract pages
+%
+\newcommand{\firstabstract}{
+        \newpage
+        \pagenumbering{roman}
+        \eabstractpage
+}
+\newcommand{\secondabstract}{
+        \newpage
+        \jabstractpage
+}
+%
+%typeout{acknowledgements}
+\newcommand{\acknowledgements}{
+        \newpage
+        \section*{Acknowledgements\addcontentsline{toc}{section}{Acknowledgements}}
+}
+%typeout{yet another reference}
+\newcommand{\reference}{
+        \newpage
+        \section*{References\addcontentsline{toc}{section}{References}}
+}
+%typeout{appendix}
+%\renewcommand{\appendix}{
+%       \newpage
+%       \section*{Appendix\addcontentsline{toc}{section}{Appendix}}
+%}
+\renewcommand{\appendix}{\par
+        \setcounter{section}{0}
+        \setcounter{subsection}{0}
+        \def\thesection{\Alph{section}}
+        \newpage
+        \section*{Appendix\addcontentsline{toc}{section}{Appendix}}
+}
+%\typeout{done}
