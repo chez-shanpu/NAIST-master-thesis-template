@@ -1,40 +1,264 @@
-\documentclass{jsarticle}
+\documentclass[12pt]{jarticle} % Japanese
+% \documentclass[12pt]{article} % English
+% if there are problems in the above regarding fonts, use this
+% \documentclass[UTF8]{ctexart}
 
-\usepackage{subfiles}
-\usepackage{listings}
-\usepackage{jlisting}
-\usepackage{color}
-\usepackage[dvipdfmx]{graphicx}
+\usepackage[utf8]{inputenc}
+%\usepackage{utf}
+\usepackage{naist-jmthesis} %Japanese
+%\usepackage{naist-mthesis} %English
 
-\title{ {\LaTeX} 自動ビルド・校正レビュー機能付きテンプレート}
-\author{pddg}
-\date{\today}
+\usepackage{graphicx}
 
-\newcommand{\code}[1]{\texttt{#1}}
-\lstset{
-    frame=single,
-    numbers=left,
-    tabsize=4,
-    basicstyle=\ttfamily,
-    numberstyle=\scriptsize,
-    commentstyle={\small\ttfamily \color[gray]{.5}},
+\pagestyle{final}       % Camera-Ready
+%\pagestyle{draft}      % Draft
+%
+%
+\lang{Japanese} % Japanese
+%\lang{English} % English
+%
+% Student Number
+%
+\studentnumber{123456}
+%
+% 修士論文 か 課題研究 かの選択
+%
+\doctitle{\mastersthesis}       % 修士論文
+%\doctitle{\mastersreport}      % 課題研究
+%
+% 取得予定の修士号は 修士(工学) か 修士(理学) か ？
+%
+\major{\engineering}    % 工学
+%\major{\science}       % 理学
+%
+% 所属プログラムはどこか ？
+%
+\program{\ise}          % 情報理工学プログラム / Program of Information Science and Engineering
+%\program{\cb}           % 情報生命科学プログラム / Program of Computational Biology
+%\program{\icps}         % 知能社会創成科学プログラム / Program of Computational Biology
+%\program{\ds}           % データサイエンス / Program of Data Science
+%
+% 日本語題目 (in LaTeX)
+%
+\title{太陽と月を利用した$\pi$の低速計算アルゴリズムに関する理論的研究}
+%
+% 日本語題目 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\ptitle{太陽と月を利用したpiの低速計算アルゴリズムに関する理論的研究}
+%
+% 英語題目 (in LaTeX)
+%
+\etitle{Theoretical Studies on Low-Speed Calculation Algorithms of $\pi$ \\
+Utilizing the Sun and the Moon}
+%
+% 英語題目 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\eptitle{Theoretical Studies on Low-Speed Calculation Algorithms of pi \\
+Utilizing the Sun and the Moon}
+%
+% 日本語氏名 (in LaTeX)
+%   （姓と名の間に空白を入れて下さい）
+%
+\author{先端 太郎}
+%
+% 日本語氏名 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\pauthor{}
+%
+% 欧文氏名 (in LaTeX)
+%   （first name, last name の順に記入し、先頭文字のみを大文字にする。）
+%
+\eauthor{Hanako Sentan}
+% 別の例: \eauthor{Kurt G\"{o}del}
+%
+%
+% 欧文氏名 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は指定する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\epauthor{}
+% 別の例: \peauthor{Kurt Goedel}
+%
+%
+% 論文提出年月日
+%
+\esyear{202X}
+\jsyear{令和XX}
+\smonth{2}
+\sday{20}
+%
+% 専攻の選択
+%
+%\department{\infproc}  % 情報処理学
+%\department{\infsys}    % 情報システム学
+%\department{\bioinf}   % 情報生命科学
+%\department{\infsci}    % 情報科学
+%
+%
+% 審査委員（日本語）
+%   （姓と名、名と称号の間に空白を入れて下さい）
+%
+%５人以上の場合，５人目以降は\addcmembers を使って宣言する。
+%最大で合わせて８人まで宣言可能。
+%主指導教員、副指導教員を明記する。両指導教員以外は委員。
+%学外審査委員は所属を明記する。しかし、理由により所属を記載できない場合は任意で構いません。
+%
+% ４人の場合
+\cmembers{○○ ○○ 教授}{（主指導教員，情報科学領域）}
+         {○○ ○○ 教授}{（副指導教員，情報科学領域）}
+         {○○ ○○ 准教授}{（副指導教員，情報科学領域）}
+         {○○ ○○ 准教授}{（△△大学）}
+%
+% 審査委員（英語）
+%     （first name, last name の順に記入し、先頭文字のみを大文字にする。
+%       first name と last name の間に空白、
+%       last name と 称号の間にカンマと空白を入れて下さい。）
+%
+% ５人以上の場合，５人目以降は\eaddcmembers を使って宣言する
+% Supervisor, Co-supervisor, and Member must be basically specified.
+% Exceptionally, the affiliation of the co-supervisor does not have to be
+% specified when it is unavailable for some reason.
+% ４人の場合
+\ecmembers{Professor XXX XXX}{(Supervisor, Division of Information Science)}
+          {Professor XXX XXX}{(Co-supervisor, Division of Information Science)}
+          {Associate Professor XXX XXX}{(Co-supervisor, Division of Information Science)}
+          {Associate Professor XXX XXX}{(YY University)}
+%
+% キーワード５〜６個 (in LaTeX)
+%
+\keywords{$\pi$, 天文学, 数学, 計算機, アルゴリズム}
+%
+% キーワード５〜６個 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\pkeywords{pi, 天文学, 数学, 計算機, アルゴリズム}
+%
+% 5 or 6 Keywords (in LaTeX)
+%
+\ekeywords{$\pi$, astronomy, mathematics, computer, algorithm}
+%
+% 5 or 6 Keywords (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%
+\epkeywords{pi, astronomy, mathematics, computer, algorithm}
+%
+% 内容梗概 (in LaTeX)
+%
+%   注: 行の先頭が\\で始まらないようにすること。
+%
+\abstract{
+人類がこの地上に現われて以来、$\pi$の計算には多くの関心が払われてきた。
+
+本論文では、太陽と月を利用して$\pi$を低速に計算するための
+画期的なアルゴリズムを与える。
+}
+%
+% 内容梗概 (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%       改行する箇所には空白行を入れる。
+%       行の先頭が\\で始まらないようにすること。
+%
+\pabstract{
+人類がこの地上に現われて以来、piの計算には多くの関心が払われてきた。
+
+本論文では、太陽と月を利用してpiを低速に計算するための
+画期的なアルゴリズムを与える。
+}
+%
+% Abstract (in LaTeX)
+%
+%  注: 　行の先頭が\\で始まらないようにすること。
+%
+\eabstract{
+The calculation of $\pi$ has been paid much attention since human beings
+appeared on the earth.
+
+This thesis presents novel low-speed algorithms to calculate
+$\pi$ utilizing the sun and the moon.
+}
+%
+% Abstract (in plain text)
+%
+%   注: (in LaTeX)と同じ場合は記入する必要なし。
+%       この情報は修士論文/課題研究には現れませんが、管理のために必要です。
+%       改行する箇所には空白行を入れる。
+%       行の先頭が\\で始まらないようにすること。
+%
+\epabstract{
+The calculation of pi has been paid much attention since human beings
+appeared on the earth.
+
+This thesis presents novel low-speed algorithms to calculate
+pi utilizing the sun and the moon.
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%% document starts here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-\maketitle
-
-\subfile{sections/abstract}
+%
+% 表紙 および アブストラクト
+%
+\titlepage
+\cmemberspage
+\firstabstract
+\secondabstract
+%
+% 目次
+%
+\toc
+\newpage
+\listoffigures
+%\newpage
+\listoftables
+%
+% これ以降本文
+%
+\newpage
+\section{はじめに}\label{sec:intro}
+\input{sections/1-introduction.tex} 
 
 \newpage
+\section{現状と今後の課題}\label{sec:kadai}
+\input{sections/2-background.tex} 
 
-\subfile{sections/usage}
+%
+% 謝辞
+%
+\acknowledgements
+Thank you.
 
+%
+% 参考文献
+% ここでは \reference を使って、自分でリストを作るか、BibTeX を使って
+% リストをつくって下さい。この例では BibTeX を作るような形式になってい
+% ます。
+%
 \newpage
+% \reference
+\bibliographystyle{plain}
+\bibliography{mthesis}
+%
+% 付録
+%
+\appendix
 
-\subfile{sections/sample}
-
-\newpage
-
-\subfile{sections/faq}
+\section{おまけその１}
+\label{sec:omake1}
+これはおまけです。
 
 \end{document}

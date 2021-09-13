@@ -1,0 +1,202 @@
+% 
+% naist-mthesis.sty: master's thesis style in NAIST
+%
+%                                             Ver. 1.2   Jan. 21, 1998
+%                                             Ver. D     July 07, 2004
+% 2018.01.08 Modified
+%  This file must be included before \begin{document}. The Document
+%  style must be 'jarticle', so you should include this macro as follows:
+%    \documentstyle[naist-mthesis]{jarticle}
+% 2020.02.13 Modified
+%  Change titlepage as the IS devision
+%
+\typeout{Master's Thesis / Master's Report Style for Division of Information Science, Science and Technology, NAIST}
+%
+% input the common style file
+%
+\input naist-mcommon.sty
+%
+% Figure and Table Caption
+%       from jarticle.sty, however, `` ''(blank) was used instead of 
+%       ``:'' to separate figure/table numbers and captions.
+%
+\long\def\@makecaption#1#2{
+ \vskip 10pt 
+ \setbox\@tempboxa\hbox{#1 \ #2}
+ \ifdim \wd\@tempboxa >\hsize #1 \ #2\par \else \hbox
+to\hsize{\hfil\box\@tempboxa\hfil} 
+ \fi}
+%
+% References (bug fix jarticle.sty)
+%
+%\typeout{reference}
+\def\thebibliography#1{\section*{参考文献\markboth
+ {参 考 文 献}{参 考 文 献}\addcontentsline{toc}{section}{参考文献}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \sloppy
+ \sfcode`\.=1000\relax}
+\let\endthebibliography=\endlist
+%
+% page layout
+%
+\topmargin=0.5cm
+\textheight=20.5cm                      % 高さ
+\textwidth=14.5cm                       % 横幅 (約３６文字)
+\oddsidemargin=0.6cm                    % 左の空きの幅
+\evensidemargin=-3.8cm                  % 右の空きの幅
+\parindent 1em                          % 字下げ 1文字
+\renewcommand{\baselinestretch}{1.2}    % 行間
+%
+% pagestyle
+%
+%\typeout{pagestyle}
+\def\yes{1}
+%
+% for final
+%
+\def\ps@final{
+\def\isfinal{1}
+\def\@evenhead{}%
+\def\@oddhead{}%
+\def\@oddfoot{\hfill\thepage\hfill}%
+\def\@evenfoot{\hfill\thepage\hfill}%
+}
+%
+% drafts
+%
+\def\ps@draft{
+\def\isfinal{0}
+\def\draftstr{{\jpntoday, \curtime: \authorstr}}
+\def\draftfoot{%
+        {{\sf \draftstr}\hfill{\sf \thepage}}%
+}
+\def\@evenhead{}%
+\def\@oddhead{}%
+\def\@oddfoot{{\draftfoot}}%
+\def\@evenfoot{{\draftfoot}}%
+}
+%
+% title page
+%
+%\typeout{titlepage}
+\renewcommand{\titlepage}{
+        \newpage
+        \thispagestyle{empty}
+        \if\isfinal\yes
+%                {\raggedleft
+%                        \normalsize NAIST-IS-\edoctitleacronym\studentnumberstr \\
+%                }
+                \vspace*{9mm}
+                \begin{center}
+                        \Large\bf\jdoctitle
+                \end{center}
+                \vspace*{27mm}
+                \begin{center}
+                        \Large\bf\titlestr
+                \end{center}
+                \vspace*{40mm}
+                \begin{center}
+                  \authorstr \\
+                  奈良先端科学技術大学院大学 \\
+                  先端科学技術研究科 \\
+                  \jprogramstr \\
+                \end{center}
+                \begin{center}
+                  主指導教員: \firstcmember \\
+                  \jlabnamestr（情報科学領域）
+                \end{center}
+                \vspace*{5mm}
+                \begin{center}
+                  \datestr 提出
+                \end{center}
+                \vspace*{\fill}
+        \else
+                \vspace*{\fill}
+                \begin{center}
+                        {\Huge\bf DRAFT}
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        \Large\bf\titlestr
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        {\Large \authorstr}
+                \end{center}
+                \vspace*{1cm}
+                \begin{center}
+                        {\Large\bf \today}
+                \end{center}
+                \begin{center}
+                        {\Large\bf \curtime}
+                \end{center}
+                \vspace*{\fill}
+        \fi
+}
+%
+% committee members page
+%
+\newcommand{\cmemberspage}{
+        \newpage
+        \thispagestyle{empty}
+        \vspace*{\fill}
+\begin{center}
+        本{\jdoctype}は奈良先端科学技術大学院大学先端科学技術研究科に \\
+        修士(\jmajorstr)
+        授与の要件として提出した\jdocname
+        である。
+
+        \bigskip
+
+        \authorstr
+
+        \bigskip\bigskip
+
+        \begin{tabular}{p{0.3in}ll}
+        \multicolumn{2}{l}{審査委員：} \\
+               & \firstcmember  & \firstposition \\
+               & \secondcmember & \secondposition \\
+               & \thirdcmember & \thirdposition \\
+               & \fourthcmember & \fourthposition \\
+               & \fifthcmember & \fifthposition \\
+               & \sixthcmember & \sixthposition \\
+               & \seventhcmember & \seventhposition \\
+               & \eighthcmember & \eighthposition
+        \end{tabular}
+        \end{center}
+}
+%
+% abstract pages
+%
+\newcommand{\firstabstract}{
+        \newpage
+        \pagenumbering{roman}
+        \jabstractpage
+}
+\newcommand{\secondabstract}{
+        \newpage
+        \eabstractpage
+}
+%
+%typeout{acknowledgements}
+\newcommand{\acknowledgements}{
+        \newpage
+        \section*{謝辞\addcontentsline{toc}{section}{謝辞}}
+}
+%typeout{yet another reference}
+\newcommand{\reference}{
+        \newpage
+        \section*{参考文献\addcontentsline{toc}{section}{参考文献}}
+}
+%typeout{appendix}
+\renewcommand{\appendix}{\par
+        \setcounter{section}{0}
+        \setcounter{subsection}{0}
+        \def\thesection{\Alph{section}}
+        \newpage
+        \section*{付録\addcontentsline{toc}{section}{付録}}
+}
+%\typeout{done}
